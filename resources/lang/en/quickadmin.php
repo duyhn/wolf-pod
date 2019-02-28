@@ -76,6 +76,7 @@ return [
 	],
 	'qa_create' => 'Create',
 	'qa_save' => 'Save',
+	'qa_save_crawl' => 'Save and Crawl',
 	'qa_edit' => 'Edit',
 	'qa_restore' => 'Restore',
 	'qa_permadel' => 'Delete Permanently',

@@ -74,6 +74,15 @@ class LinksController extends Controller
         $data = $request->all();
         $data['status'] = Link::QUEUE_STATUS_OPEN;
         $link = Link::create($data);
+        if (isset($data['is_crawl'])) {
+            $data = $this->crawlerService->crawler($link->link);
+            ExtractResult::updateOrCreate([
+                    "link_id" => $link->id
+                ],
+                $data
+            );
+            $link->update(['status' => Link::QUEUE_STATUS_COMPLETE]);
+        }
         return redirect()->route('admin.links.index');
     }
 
@@ -254,7 +263,6 @@ class LinksController extends Controller
         $link = Link::findOrFail($id);
         $link->update(['status' => Link::QUEUE_STATUS_PROGRESS]);
         $data = $this->crawlerService->crawler($link->link);
-        DB::enableQueryLog();
         ExtractResult::updateOrCreate([
                 "link_id" => $link->id
             ],

@@ -38,4 +38,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('extract_managers_perma_del/{id}', ['uses' => 'Admin\ExtractResultController@perma_del', 'as' => 'extract_managers.perma_del']);
     Route::post('/spatie/media/upload', 'Admin\SpatieMediaController@create')->name('media.upload');
     Route::post('/spatie/media/remove', 'Admin\SpatieMediaController@destroy')->name('media.remove');
+    Route::get('/spatie/media/download', 'Admin\SpatieMediaController@dowload')->name('media.download');
 });

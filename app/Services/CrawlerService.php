@@ -19,7 +19,7 @@ class CrawlerService
     {
         $client = new Client();
         $response = $client->request('GET', $link);
-        $contents = $response->getBody()->getContents();
+        $contents = $response->getBody()->getContents();        
         $crawler = new Crawler($contents);
         $branch = $crawler->filterXPath('//a[@id="bylineInfo"]')->text();
         $title = $crawler->filterXPath('//span[@class="a-size-large"]')->text();
@@ -28,11 +28,19 @@ class CrawlerService
         $bullet5 = $bullets->eq(4)->text();
         $imageMockup = $crawler->filterXPath('//img[@id="landingImage"]')->attr('data-old-hires');
         $imageOriginal = $this->getNameImageOriginFromMockup($imageMockup);
-        $desc = $crawler->filterXpath('//div[@id="productDescription"]')->text();
+        $desc =null;
+        $descCr = $crawler->filterXpath('//div[@id="productDescription"]');
+        if ($descCr->count() > 0) {
+            $desc = $descCr->text();
+        }
         $divBullet = $crawler->filterXpath('//div[@id="detailBullets_feature_div"]');
         $lis = $divBullet->filterXpath('//ul')->eq(0)->filterXpath('//li');
-        $asin = $lis->eq(2)->filterXpath('//span')->eq(2)->text();
-        $dateFirstAws = $lis->eq(4)->filterXpath('//span')->eq(2)->text();
+        $asin = null;
+        $dateFirstAws = null;
+        if ($lis->count() > 0) {
+            $asin = $lis->eq(2)->filterXpath('//span')->eq(2)->text();
+            $dateFirstAws = $lis->eq(4)->filterXpath('//span')->eq(2)->text();
+        }
         $bestSellerCr = $crawler->filterXpath('//li[@id ="SalesRank"]')->first();
         $bestSellerRank = null;
         if ($bestSellerCr->count() > 0) {
