@@ -33,7 +33,7 @@ class ExtractResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (! Gate::allows('extract_manager_access')) {
             return abort(401);
@@ -43,11 +43,10 @@ class ExtractResultController extends Controller
             if (! Gate::allows('extract_manager_delete')) {
                 return abort(401);
             }
-            $extract_managers = ExtractResult::onlyTrashed()->get();
+            $extract_managers = ExtractResult::onlyTrashed()->paginate();
         } else {
-            $extract_managers = ExtractResult::all();
+            $extract_managers = ExtractResult::paginate();
         }
-
         return view('admin.extract_managers.index', compact('extract_managers'));
     }
 

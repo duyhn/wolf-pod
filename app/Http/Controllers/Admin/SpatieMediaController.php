@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Image;
 
 class SpatieMediaController extends Controller
 {
@@ -38,5 +39,19 @@ class SpatieMediaController extends Controller
         }
 
         return response()->json(['files' => $addedFiles]);
+    }
+
+    /**
+     * Dowload image from url
+     *
+     * @param Request $request Request
+     *
+     * @return Response
+     */
+    public function dowload(Request $request)
+    {
+        $url =  $request->get('url');
+        $img = Image::make($url);
+        return $img->stream('jpg', 60);
     }
 }

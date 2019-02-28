@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+/*** BRAND PAGE ***/
+.brand-page {
+    max-width: 1300px;
+    padding: 0 10px;
+    margin: 0 auto
+}
+.brand-page h2 {
+    padding-left: 25px;
+    margin-bottom: 35px;
+    color: #04a0fe;
+}
+.brand-img {
+    position: relative;
+}
+.brand-img img {
+    max-width: 100%;
+}
+.brand-img a {
+    position: absolute;
+    background: #fc0404;
+    border-radius: 4px;
+    color: #fff;
+    top: 10px;
+    right: 10px;
+    padding: 5px 8px;
+}
+.brand-img a:hover {
+    background: #a70303;
+    text-decoration: none;
+}
+.brand-img a i {
+    margin-right: 4px;
+}
+.download-btn {
+    text-align: center;
+    padding-top: 20px;
+}
+.download-btn a {
+    padding: 10px 25px;
+    color: #000;
+    border-radius: 10px;
+    background-image: linear-gradient(#cae799, #91c143);
+}
+.download-btn a:hover {
+    text-decoration: none;
+    background: #92c244;
+}
+.brand-cnt {
+    padding-left: 25px;
+    color: #999a99;
+}
+.brand-cnt .link {
+    margin-left: 5px;
+    color: #1bb0fd;
+}
+.txt-bold {
+    font-weight: bold;
+    color: #000000;
+    padding-right: 5px;
+}
+.txt-gray {
+    color: #363736;
+}
+.txt-blue {
+    color: #1bb0fd;
+}
