@@ -8,7 +8,6 @@ $(function () {
             $('.shop_block .shop_cnt').addClass('shop_grid');
             $('.change_style a').removeClass('active');
             $(target).parent().addClass('active');
-            console.log(target);
             return false;
         } else {
             $('.shop_block h3').html('Shop List');
@@ -16,9 +15,8 @@ $(function () {
             $('.shop_block .shop_cnt').addClass('shop_list');
             $('.change_style a').removeClass('active');
             $(target).parent().addClass('active');
-            console.log(target);
             return false;
         }
     });
-    // $('#DataTables_Table_0').remove();
+
 });

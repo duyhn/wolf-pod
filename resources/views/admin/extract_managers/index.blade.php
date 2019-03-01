@@ -22,33 +22,34 @@
             @lang('quickadmin.qa_list')
             <div class="change_style">
                     <span>
-                        <a class="shop_grid_btn" href="#">
+                        <a class="shop_grid_btn active" href="#">
                             <i class="fa fa-th" aria-hidden="true"></i></i>
                         </a>
                     </span>
                     <span>
-                        <a class="shop_list_btn active" href="#">
+                        <a class="shop_list_btn" href="#">
                             <i class="fa fa-list" aria-hidden="true"></i>
                         </a>
                     </span>
             </div>
         </div>
         <div class="panel-body table-responsive shop_block">
-            <div class="shop_list shop_cnt">
+            <div class="shop_grid shop_cnt">
                     <ul class="shop_item">
                     @if (count($extract_managers->items()) > 0)
                         @foreach ($extract_managers->items() as $extract_manager)
-                            <li class="item_content">
+                            <li class="item_content" onclick="location.href='{{ route('admin.extract_managers.show',[$extract_manager->id]) }}';">
                                 <div class="media">
                                     <div class="media-left">
                                         <p>
-                                            <img src="{{$extract_manager->image_mockup}}" alt="" width="150" height="150"/>
+                                            <img src="/images/{{$extract_manager->asin}}/{{$extract_manager->image_mockup}}" alt="" width="150" height="150"/>
                                         </p>
                                     </div>
                                     <div class="media-body">
-                                        <p class="item_name">{{$extract_manager->title}}</p>
-                                        <span class="item_price">{{$extract_manager->branch}}</span>
-                                        <span class="item_desc">{{$extract_manager->description}}</span>
+                                        <p class="item_name">{{$extract_manager->rank}}</p>
+                                        <span class="item_price">{{$extract_manager->title}}</span>
+                                        <p><span class="txt-bold">@lang('quickadmin.extract-manager.fields.asin'):</span><span class="txt-gray">{{ $extract_manager->asin}}</span></p>
+                                        <p>{{$extract_manager->public_date}}</p>
                                         @can('extract_manager_view')
                                         <a href="{{ route('admin.extract_managers.show',[$extract_manager->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.qa_view')</a>
                                         @endcan

@@ -32,5 +32,5 @@
     {!! Form::close() !!}
 @stop
 @section('javascript') 
-<script src="{{ url('adminlte/js/pages/links.js') }}"></script>
+<script src="{{ url('adminlte/js/pages/links/create.js') }}"></script>
 @endsection

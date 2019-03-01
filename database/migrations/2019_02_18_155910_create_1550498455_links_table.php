@@ -15,7 +15,7 @@ class Create1550498455LinksTable extends Migration
         if(! Schema::hasTable('links')) {
             Schema::create('links', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('link')->nullable();
+                $table->mediumText('link')->nullable();
                 $table->tinyInteger('status');
                 $table->timestamps();
                 $table->softDeletes();
