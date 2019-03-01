@@ -46,7 +46,7 @@
                                         </p>
                                     </div>
                                     <div class="media-body">
-                                        <p class="item_name">{{$extract_manager->rank}}</p>
+                                        <p class="item_name">&nbsp;{{$extract_manager->rank}}</p>
                                         <span class="item_price">{{$extract_manager->title}}</span>
                                         <p><span class="txt-bold">@lang('quickadmin.extract-manager.fields.asin'):</span><span class="txt-gray">{{ $extract_manager->asin}}</span></p>
                                         <p>{{$extract_manager->public_date}}</p>
