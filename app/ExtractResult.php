@@ -17,7 +17,7 @@ class ExtractResult extends Model implements HasMedia
 {
     use SoftDeletes, HasMediaTrait;
 
-    protected $fillable = ['title', 'link_id', 'description', 'branch', 'bullet_4', 'bullet_5', 'image_mockup', 'asin', 'date_first_amazon', 'best_sellter_rank', 'image_original'];
+    protected $fillable = ['title', 'link_id', 'description', 'branch', 'image_mockup', 'price','asin', 'public_date', 'rank', 'image_original'];
     protected $hidden = [];
     
     
@@ -27,15 +27,14 @@ class ExtractResult extends Model implements HasMedia
 
         ExtractResult::observe(new \App\Observers\UserActionsObserver);
     }
-    
+
     /**
-     * Get the ExtractResult's original image
+     * Get the features
      *
-     * @param  string  $value
-     * @return string
+     * @return hasMany
      */
-    public function getImageOriginalAttribute()
+    public function features()
     {
-        return env('AMAZONE_DOMAIN_DOWNLOAD_IMAGE').$this->attributes['image_original'];
+        return $this->hasMany(ExtractResultFeature::class);
     }
 }

@@ -39,7 +39,7 @@ class LinksController extends Controller
             if (! Gate::allows('link_delete')) {
                 return abort(401);
             }
-            $links = Link::onlyTrashed()->get();
+            $links = Link::onlyTrashed()->orderBy("id", "DESC")->get();
         } else {
             $links = Link::all();
         }
@@ -250,6 +250,7 @@ class LinksController extends Controller
         $csv_data = array_slice($data, 0, 2);
         return view('admin.links.import_fields', compact('csv_data'));
     }
+    
     /**
      * Crawler data
      *
@@ -263,11 +264,13 @@ class LinksController extends Controller
         $link = Link::findOrFail($id);
         $link->update(['status' => Link::QUEUE_STATUS_PROGRESS]);
         $data = $this->crawlerService->crawler($link->link);
-        ExtractResult::updateOrCreate([
+        $extractResult = ExtractResult::updateOrCreate([
                 "link_id" => $link->id
             ],
             $data
         );
+        $extractResult->features()->delete();
+        $extractResult->features()->createMany($data['features']);
         $link->update(['status' => Link::QUEUE_STATUS_COMPLETE]);
         return redirect()->route('admin.links.index');
     }

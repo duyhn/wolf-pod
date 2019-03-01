@@ -38,14 +38,13 @@ class ExtractResultController extends Controller
         if (! Gate::allows('extract_manager_access')) {
             return abort(401);
         }
-        $data = $this->crawlerService->crawler("https://www.amazon.com/dp/B0714PH4QZ");
         if (request('show_deleted') == 1) {
             if (! Gate::allows('extract_manager_delete')) {
                 return abort(401);
             }
-            $extract_managers = ExtractResult::onlyTrashed()->paginate();
+            $extract_managers = ExtractResult::onlyTrashed()->orderBy("id", "DESC")->paginate();
         } else {
-            $extract_managers = ExtractResult::paginate();
+            $extract_managers = ExtractResult::orderBy("id", "DESC")->paginate();
         }
         return view('admin.extract_managers.index', compact('extract_managers'));
     }
@@ -149,7 +148,7 @@ class ExtractResultController extends Controller
         if (! Gate::allows('extract_manager_view')) {
             return abort(401);
         }
-        $extract_manager = ExtractResult::findOrFail($id);
+        $extract_manager = ExtractResult::with(['features'])->findOrFail($id);
 
         return view('admin.extract_managers.show', compact('extract_manager'));
     }

@@ -20,13 +20,12 @@ class Create1550498356ExtractResultsTable extends Migration
                 $table->mediumText('title')->nullable();
                 $table->mediumText("branch")->nullable();
                 $table->mediumText('description')->nullable();
-                $table->mediumText("bullet_4")->nullable();
-                $table->mediumText("bullet_5")->nullable();
+                $table->string('price')->nullable();
                 $table->mediumText("image_mockup")->nullable();
-                $table->string('image_original');
+                $table->string('image_original')->nullable();
                 $table->string("asin")->nullable();
-                $table->string("date_first_amazon")->nullable();
-                $table->mediumText("best_sellter_rank")->nullable();
+                $table->string("public_date")->nullable();
+                $table->mediumText("rank")->nullable();
                 $table->timestamps();
                 $table->softDeletes();
                 $table->index(['deleted_at']);

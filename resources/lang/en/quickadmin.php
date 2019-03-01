@@ -45,11 +45,14 @@ return [
 			'image_mockup' => 'Images mockup',
 			'image_original' => 'Images original',
 			'branch' => 'Branch',
-			'asin' => 'Asin',
+			'asin' => 'ASIN',
 			'bullet_4' => 'Bullet 4',
 			'bullet_5' => 'Bullet 5',
 			'date_first_amazon' => 'Date first Amazon',
-			'best_sellter_rank' => 'Best sellter rank'
+			'feature' => 'Feature',
+			'rank' => 'Rank',
+			'price' => 'Price',
+			'publish_date' => 'Publish Date'
 		],
 	],
 	
