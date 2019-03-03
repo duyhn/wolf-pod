@@ -23,6 +23,8 @@ class StoreLinksRequest extends FormRequest
     public function rules()
     {
         return [
+            "links" => "required|array",
+            "links.*" => "required|url"
         ];
     }
 }

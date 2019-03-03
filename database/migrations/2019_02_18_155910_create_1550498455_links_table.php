@@ -16,6 +16,7 @@ class Create1550498455LinksTable extends Migration
             Schema::create('links', function (Blueprint $table) {
                 $table->increments('id');
                 $table->mediumText('link')->nullable();
+                $table->string('link_id', 32);
                 $table->tinyInteger('status');
                 $table->timestamps();
                 $table->softDeletes();

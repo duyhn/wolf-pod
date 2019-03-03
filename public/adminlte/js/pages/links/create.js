@@ -5,6 +5,17 @@ $(function () {
         $("#link-form").submit();
     });
     $('#add_link').click(function (e) {
-        alert("aaa");
+        let links = $(".fragment");
+        var $link = links.last();
+        var $linkClone = $link.clone();
+        $linkClone.find("input").val( "");
+        $linkClone.appendTo( "#list-links");
     });
 });
+function removeLinks(e) {
+    let links = $(".fragment");
+    if (links.length >1) {
+        e.parentNode.remove();
+    }
+    resetName();
+}
