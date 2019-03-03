@@ -38,7 +38,7 @@ class CrawlerService
             return ["feature" => $this->replaceString($node->text(), $delemiters)];
         });
         $imageMockup = $crawler->filterXPath('//img[@id="landingImage"]')->attr('data-old-hires');
-        $imageOriginal = env('AMAZONE_DOMAIN_DOWNLOAD_IMAGE').$this->getNameImageOriginFromMockup($imageMockup);
+        $imageOriginal = env('AMAZONE_DOMAIN_DOWNLOAD_IMAGE').rawurlencode($this->getNameImageOriginFromMockup($imageMockup));
         $desc =null;
         $descCr = $crawler->filterXpath('//div[@id="productDescription"]');
         if ($descCr->count() > 0) {
@@ -105,7 +105,6 @@ class CrawlerService
     {
         $url = urldecode($urlMockup);
         $infos = explode("|", $url);
-        
         foreach ($infos as $item) {
             if (preg_match('/.*png.*/i', $item)) {
                 return $item;
