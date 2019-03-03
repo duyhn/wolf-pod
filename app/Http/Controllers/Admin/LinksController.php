@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Services\CrawlerService;
 use App\ExtractResult;
 use DB;
+use Log;
 
 class LinksController extends Controller
 {
@@ -71,17 +72,35 @@ class LinksController extends Controller
         if (! Gate::allows('link_create')) {
             return abort(401);
         }
-        $data = $request->all();
-        $data['status'] = Link::QUEUE_STATUS_OPEN;
-        $link = Link::create($data);
-        if (isset($data['is_crawl'])) {
-            $data = $this->crawlerService->crawler($link->link);
-            ExtractResult::updateOrCreate([
-                    "link_id" => $link->id
-                ],
-                $data
-            );
-            $link->update(['status' => Link::QUEUE_STATUS_COMPLETE]);
+        $input = $request->all();
+        $data = [];
+        $links = $input["links"];
+        foreach($links as $link) {
+            $data[] = [
+                'link' => $link,
+                'link_id' => md5($link),
+                'status' => Link::QUEUE_STATUS_OPEN
+            ];
+        }
+        Link::insert($data);
+        //TODO: creat job
+        if (isset($input['is_crawl'])) {
+            foreach($links as $value) {
+                try {
+                    $data = $this->crawlerService->crawler($value);
+                    $link = Link::where('link_id', md5($value))->first();
+                    ExtractResult::updateOrCreate([
+                            "link_id" => $link->id
+                        ],
+                        $data
+                    );
+                    $link->update(['status' => Link::QUEUE_STATUS_COMPLETE]);
+                } catch(\Exception $e) {
+                    Log::error($e->getMessage());
+                    continue;
+                }
+
+            }
         }
         return redirect()->route('admin.links.index');
     }
