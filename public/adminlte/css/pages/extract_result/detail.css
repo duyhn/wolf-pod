@@ -68,3 +68,18 @@
 .txt-blue {
     color: #1bb0fd;
 }
+.dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    background: white;
+}
+.dropzone .dz-preview {
+    display: block;
+}
+.dropzone .dz-preview .dz-image {
+    width: auto;
+    height: auto;
+}
+.dropzone .dz-preview .dz-image img {
+    width: 100%;
+}

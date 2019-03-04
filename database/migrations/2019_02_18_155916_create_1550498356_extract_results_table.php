@@ -23,6 +23,7 @@ class Create1550498356ExtractResultsTable extends Migration
                 $table->string('price')->nullable();
                 $table->mediumText("image_mockup")->nullable();
                 $table->string('image_original')->nullable();
+                $table->string('image_clean')->nullable();
                 $table->string("asin")->nullable();
                 $table->string("public_date")->nullable();
                 $table->mediumText("rank")->nullable();

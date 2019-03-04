@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('css') 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
     <link href="{{ url('adminlte/css/pages/extract_result/detail.css') }}" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
 @endsection
 @section('content')
     <h3 class="page-title">@lang('quickadmin.extract-manager.title')</h3>
@@ -32,9 +32,9 @@
                         <p class="download-btn"><a href="/images/{{$extract_manager->asin}}/{{$extract_manager->image_original}}" download="{{$extract_manager->image_original}}">Download</a></p>
                     </div>
                     <div class="col-md-4">
-                    <form method="post" action="{{route('admin.media.upload')}}" enctype="multipart/form-data" 
-                  class="dropzone" id="dropzone">
-                        </form>   
+                        <div class="dropzone" id="my-dropzone" name="myDropzone">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,26 +63,45 @@
 @section('javascript') 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
 <script type="text/javascript">
-    Dropzone.options.dropzone =
-         {
-            maxFilesize: 12,
-            renameFile: function(file) {
-                var dt = new Date();
-                var time = dt.getTime();
-               return time+file.name;
-            },
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            addRemoveLinks: true,
-            timeout: 5000,
-            success: function(file, response) 
-            {
-                console.log(response);
-            },
-            error: function(file, response)
-            {
-               return false;
+    Dropzone.options.myDropzone= {
+        url: '{{route("admin.media.upload")}}',
+           headers: {
+               'X-CSRF-TOKEN': '{!! csrf_token() !!}'
+           },
+           autoProcessQueue: true,
+           uploadMultiple: false,
+           parallelUploads: 5,
+           maxFiles: 1,
+           maxFilesize: 10,
+           acceptedFiles: ".jpeg,.jpg,.png,.gif",
+           dictFileTooBig: 'Image is bigger than 5MB',
+           addRemoveLinks: true,
+           removedfile: function(file) {
+           var name = file.name;    
+           name =name.replace(/\s+/g, '-').toLowerCase();    /*only spaces*/
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('admincp/deleteImg') }}',
+                headers: {
+                     'X-CSRF-TOKEN': '{!! csrf_token() !!}'
+                 },
+                data: "id="+name,
+                dataType: 'html',
+                success: function(data) {
+                    $("#msg").html(data);
+                }
+            });
+          var _ref;
+          if (file.previewElement) {
+            if ((_ref = file.previewElement) != null) {
+              _ref.parentNode.removeChild(file.previewElement);
             }
-};
+          }
+          return this._updateMaxFilesReachedClass();
+        },
+        previewsContainer: null,
+        hiddenInputContainer: "body",
+    }
 </script>
 @endsection
 

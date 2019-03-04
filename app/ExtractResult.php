@@ -17,7 +17,7 @@ class ExtractResult extends Model implements HasMedia
 {
     use SoftDeletes, HasMediaTrait;
 
-    protected $fillable = ['title', 'link_id', 'description', 'branch', 'image_mockup', 'price','asin', 'public_date', 'rank', 'image_original'];
+    protected $fillable = ['title', 'link_id', 'description', 'branch', 'image_mockup', 'price','asin', 'public_date', 'rank', 'image_original', 'image_clean'];
     protected $hidden = [];
     
     
